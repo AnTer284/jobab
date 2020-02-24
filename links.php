@@ -31,17 +31,19 @@
             <a href="?logout=true" class="btn btn-logout">Выйти</a>
         <?php } ?>
 
+		
         <a href="index.php" class="btn btn-main">На главную</a>
 
         <?php
-            $query = $pdo->prepare('SELECT `url`, `short_key` FROM links');
+            $query = $pdo->prepare('SELECT `id`,`url`,`short_key` FROM links');
             $query->execute();
             $row = $query->fetchAll(PDO::FETCH_ASSOC);
 
             if($row) echo '<div class="linkContainer">';
             foreach ($row as $link){
                 $readyLink = $_SERVER['HTTP_HOST'] . '/-' . $link['short_key'];
-                echo '<a class="btn" href="-' . $link['short_key'] . '">' . $readyLink . '</a>';
+                echo '<a class="btn" href="-' . $link['short_key'] . '">' . $readyLink . '</a><br>';
+                echo '<a class="btn" href="/php/clear.php?key='.$link['id'].'">Удалить ссылку</a>';
             }
             if($row) echo '</div>';
         ?>
